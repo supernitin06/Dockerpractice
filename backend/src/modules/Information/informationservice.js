@@ -1,4 +1,4 @@
-import pool from "../../../config/db.js";
+import pool from "../../../../redish/backend/config/db.js";
 
 export const postinformation = async (data) => {
     const { name, email } = data;
