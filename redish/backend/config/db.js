@@ -16,21 +16,11 @@ pool.on("error", (err) => {
   console.error("Unexpected PostgreSQL client error:", err.message);
 });
 
-// Initialize DB and test connection
-export const initDB = async () => {
+// Test connection on startup
+const testConnection = async () => {
   try {
     const res = await pool.query("SELECT NOW()");
     console.log("Database ping successful at:", res.rows[0].now);
-
-    const query = `CREATE TABLE IF NOT EXISTS person (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );`;
-    await pool.query(query);
-    console.log("Tables initialized ✅");
   } catch (error) {
     console.error(
       "❌ Database connection failed:",
@@ -40,6 +30,6 @@ export const initDB = async () => {
   }
 };
 
-initDB();
+testConnection();
 
 export default pool;
